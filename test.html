@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>サンプル</title>
+    <style>
+        .content-area {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .content-area h2 {
+            text-align: center;
+        }
+
+        .rss-btn {
+            width: 300px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            margin: 0 auto;
+            margin-bottom: 60px;
+        }
+
+        .rss-btn a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            background: #0099FF;
+            text-align: center;
+            color: #FFFFFF;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+        }
+
+        .rss-list {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            list-style-type: none;
+            padding: 10px 10px;
+            color: #333333;
+            border-top: 1px solid #d9d9d9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-area">
+        <div id="rss-feed-1">
+            <h2>水質汚染</h2>
+            <ul id="feed-a"></ul>
+            <div class='rss-btn'>
+                <a href=''>もっと見る</a>
+            </div>
+        </div>
+
+        <div id="rss-feed-2">
+            <h2>温暖化</h2>
+            <ul id="feed-b"></ul>
+            <div class='rss-btn'>
+                <a href=''>もっと見る</a>
+            </div>
+        </div>
+
+        <div id="rss-feed-3">
+            <h2>土壌汚染</h2>
+            <ul id="feed-c"></ul>
+            <div class='rss-btn'>
+                <a href=''>もっと見る</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const rssFeeds = [
+            {
+                name: '水質汚染',
+                url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.google.co.jp/alerts/feeds/11818790637394781868/5730743916708813572',
+                targetId: 'feed-a'
+            },
+            {
+                name: '温暖化',
+                url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.google.co.jp/alerts/feeds/11818790637394781868/5685444894200799844',
+                targetId: 'feed-b'
+            },
+            {
+                name: '土壌汚染',
+                url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.google.co.jp/alerts/feeds/11818790637394781868/16051316454223707398',
+                targetId: 'feed-c'
+            }
+        ];
+
+        rssFeeds.forEach(feed => {
+            fetch(feed.url)
+                .then(res => res.json())
+                .then(data => {
+                    let html = '';
+                    data.items.forEach(item => {
+                        html += `
+              <li class="rss-list">
+                <a href="${item.link}" target="_blank"><strong>${item.title}</strong></a><br>
+                <p>${item.description}</p>
+              </li>
+            `;
+                    });
+                    document.getElementById(feed.targetId).innerHTML = html;
+                })
+                .catch(error => {
+                    console.error(`Feed "${feed.name}" の読み込みエラー:`, error);
+                    document.getElementById(feed.targetId).innerHTML = '<li>読み込みに失敗しました。</li>';
+                });
+        });
+    </script>
+</body>
+
+</html>
