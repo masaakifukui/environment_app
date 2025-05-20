@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>トップ</title>
+    <title>温暖化</title>
     <style>
         .content-area {
             width: 80%;
@@ -49,47 +49,18 @@
 
 <body>
     <div class="content-area">
-        <div id="rss-feed-1">
-            <h2>水質汚染</h2>
-            <ul id="feed-a"></ul>
-            <div class='rss-btn'>
-                <a href='./waterpollution.html'>もっと見る</a>
-            </div>
-        </div>
-
-        <div id="rss-feed-2">
+        <div id="rss-feed-category-2">
             <h2>温暖化</h2>
             <ul id="feed-b"></ul>
-            <div class='rss-btn'>
-                <a href='./globalwarming.html'>もっと見る</a>
-            </div>
-        </div>
-
-        <div id="rss-feed-3">
-            <h2>土壌汚染</h2>
-            <ul id="feed-c"></ul>
-            <div class='rss-btn'>
-                <a href='./soilpollution.html'>もっと見る</a>
-            </div>
         </div>
     </div>
 
     <script>
         const rssFeeds = [
             {
-                name: '水質汚染',
-                url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.google.co.jp/alerts/feeds/11818790637394781868/5730743916708813572',
-                targetId: 'feed-a'
-            },
-            {
                 name: '温暖化',
                 url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.google.co.jp/alerts/feeds/11818790637394781868/5685444894200799844',
                 targetId: 'feed-b'
-            },
-            {
-                name: '土壌汚染',
-                url: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.google.co.jp/alerts/feeds/11818790637394781868/16051316454223707398',
-                targetId: 'feed-c'
             }
         ];
 
@@ -98,8 +69,7 @@
                 .then(res => res.json())
                 .then(data => {
                     let html = '';
-                    const items =data.items.slice(0,3);
-                    items.forEach(item => {
+                    data.items.forEach(item => {
                         html += `
               <li class="rss-list">
                 <a href="${item.link}" target="_blank"><strong>${item.title}</strong></a><br>
