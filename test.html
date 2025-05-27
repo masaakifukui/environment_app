@@ -57,10 +57,10 @@
     </div>
 
     <script>
-        import { neon } from "@neondatabase/serverless";
+        import postgres from 'postgres';
+        const sql = postgres(process.env.DATABASE_URL,  { ssl: 'verify-full' });
 
         export async function getData() {
-            const sql = neon(process.env.DATABASE_URL);
             const data = await sql`SELECT * FROM environment;`;
             return data;
         }
