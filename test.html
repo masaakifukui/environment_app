@@ -1,79 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <title>test</title>
-    <style>
-        .content-area {
-            width: 80%;
-            margin: 0 auto;
-        }
-
-        .content-area h2 {
-            text-align: center;
-        }
-
-        .rss-btn {
-            width: 300px;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            margin: 0 auto;
-            margin-bottom: 60px;
-        }
-
-        .rss-btn a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            text-decoration: none;
-            background: #0099FF;
-            text-align: center;
-            color: #FFFFFF;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 10px;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-        }
-
-        .rss-list {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            list-style-type: none;
-            padding: 10px 10px;
-            color: #333333;
-            border-top: 1px solid #d9d9d9;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>API 表示サンプル</title>
 </head>
-
 <body>
-    <div class="content-area">
-        
-        <div id="rss-feed-2">
-            <h2>温暖化</h2>
-            <ul id="feed-b"></ul>
-        </div>
-    </div>
+  <h1>一覧</h1>
+  <ul id="titleList"></ul>
 
-    <script>
-        import postgres from 'postgres';
-        const sql = postgres(process.env.DATABASE_URL,  { ssl: 'verify-full' });
+  <script>
+    // API からデータを取得
+    fetch("https://firstd1project.masaaki.workers.dev/?category=2") // ← 自分のAPIのURLに変更
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById("titleList");
 
-        export async function getData() {
-            const data = await sql`SELECT * FROM environment;`;
-            return data;
-        }
-
-        var environmentData = getData()
-
-        environmentData.forEach(data => {
-              <li class="rss-list">
-                <a href="${data.link}" target="_blank"><strong>${data.title}</strong></a><br/>
-                <p>${data.description}</p>
-              </li>
-            });
-    </script>
+        data.forEach(item => {
+          const li = document.createElement("li");
+          li.title = `${item.title}`;
+          list.appendChild(li);
+        });
+      })
+      .catch(error => {
+        console.error("APIエラー:", error);
+      });
+  </script>
 </body>
-
 </html>
