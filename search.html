@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>検索結果</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="search-area">
+        <form action="/search" method="get">
+            <input type="text" name="q" placeholder="キーワードで検索">
+            <button type="submit">
+                <span class="search-icon"></span>
+            </button>
+          </form>
+    </div>
+    <div class="content-area">
+        <div id="rss-feed-category-2">
+            <h2>検索結果</h2>
+            <div id="results">読み込み中...</div>
+            <div class='rss-btn'>
+                <a href='./index.html'>戻る</a>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get("q")?.toLowerCase() || "";
+      const category = params.get("category") || "";
+  
+      fetch('https://firstd1project.masaaki.workers.dev/') // ← JSONを返すCloudflare APIのURL
+        .then(response => response.json())
+        .then(data => {
+          const filtered = data.filter(item => {
+            const matchesCategory = category ? item.category === category : true;
+            const matchesKeyword = q
+              ? item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q)
+              : true;
+            return matchesCategory && matchesKeyword;
+          });
+  
+          const resultsDiv = document.getElementById("results");
+          resultsDiv.innerHTML = "";
+  
+          if (filtered.length === 0) {
+            resultsDiv.textContent = "一致する結果はありません。";
+            return;
+          }
+  
+          filtered.forEach(item => {
+            const div = document.createElement("div");
+            div.innerHTML = `<li class="rss-list">
+                <a href="${item.link}" target="_blank"><strong>${item.title}</strong></a><br>
+                <p>${item.content}</p>
+              </li>`;
+            resultsDiv.appendChild(div);
+          });
+        })
+        .catch(error => {
+          document.getElementById("results").textContent = "データの取得に失敗しました。";
+          console.error(error);
+        });
+    </script>
+</body>
+
+</html>
