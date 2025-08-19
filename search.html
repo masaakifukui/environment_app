@@ -27,6 +27,8 @@
    
 
     <script>
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("q");         // キーワード検索
       const form = document.getElementById("search-form");
       const input = form.querySelector("input[name='q']");
       const resultsDiv = document.getElementById("results");
@@ -98,7 +100,12 @@
     
       // ✅ キーワード＆カテゴリで絞り込み
       function applyFilterAndRender() {
-        const q = input.value.trim().toLowerCase();
+        var q
+        if (query) {
+          q = query
+        } else {
+          q = input.value.trim().toLowerCase();
+        }
     
         const filtered = allData.filter(item => {
           const matchKeyword = q
