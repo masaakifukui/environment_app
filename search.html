@@ -121,17 +121,24 @@
       // 初期処理
       window.addEventListener("DOMContentLoaded", () => {
         if (query) input.value = query;
-        // URLから q を削除して書き換え
-        const params = new URLSearchParams(window.location.search);
-        params.delete("q");
-        const newUrl = `${location.pathname}?${params.toString()}`.replace(/\?$/, "");
-        window.history.replaceState({}, "", newUrl);
-              fetchAllData();
+        fetchAllData();
       });
     
       // フォーム送信時
       form.addEventListener("submit", e => {
         e.preventDefault();
+        // フォームの値を取得
+        const qValue = input.value.trim();
+
+        // URL を更新（q パラメータを置き換え）
+        const params = new URLSearchParams(window.location.search);
+        if (qValue) {
+          params.set("q", qValue);
+        } else {
+          params.delete("q");
+        }
+        const newUrl = `${location.pathname}?${params.toString()}`.replace(/\?$/, "");
+        window.history.replaceState({}, "", newUrl);
         applyFilterAndRender();
       });
     </script>    
