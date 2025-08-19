@@ -100,31 +100,33 @@
     
       // ✅ キーワード＆カテゴリで絞り込み
       function applyFilterAndRender() {
-        var q
-        if (query) {
-          q = query
-        } else {
-          q = input.value.trim().toLowerCase();
-        }
-    
+        // フォーム入力値を優先
+        const q = input.value.trim().toLowerCase();
+
         const filtered = allData.filter(item => {
           const matchKeyword = q
             ? (item.title.toLowerCase().includes(q) || (item.description || "").toLowerCase().includes(q))
             : true;
-    
+
           const matchCategory = categoryFromParamOrReferrer !== null
             ? Number(item.category) === categoryFromParamOrReferrer
-            : true;
-    
+            : true;  // カテゴリなしの場合はすべて通す
+
           return matchKeyword && matchCategory;
         });
-    
+
         renderResults(filtered);
       }
     
       // 初期処理
       window.addEventListener("DOMContentLoaded", () => {
-        fetchAllData();
+        if (query) input.value = query;
+        // URLから q を削除して書き換え
+        const params = new URLSearchParams(window.location.search);
+        params.delete("q");
+        const newUrl = `${location.pathname}?${params.toString()}`.replace(/\?$/, "");
+        window.history.replaceState({}, "", newUrl);
+              fetchAllData();
       });
     
       // フォーム送信時
