@@ -27,6 +27,7 @@ if (document.body.contains(document.getElementById("feed-a"))) {
                 let html = '';
                 const items = data.items.slice(0, 3);
                 items.forEach(item => {
+                    console.log(item)
                     html += `
                       <li class="rss-list">
                         <a href="${item.link}" target="_blank"><strong>${item.title}</strong></a><br>
