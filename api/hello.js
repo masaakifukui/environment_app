@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
     const { text } = await generateText({
       model,
-      prompt: "Hello Gemini, can you respond with a short greeting?"
+      prompt: "日本の首都はどこですか？"
     });
 
     res.status(200).json({ result: text });
