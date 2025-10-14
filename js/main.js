@@ -151,6 +151,6 @@ if (document.getElementById("search-form")) {
         }
         const newUrl = `${location.pathname}?${params.toString()}`.replace(/\?$/, "");
         window.history.replaceState({}, "", newUrl);
-        applyFilterAndRender();
+        fetchAllData();
     });
 }
