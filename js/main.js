@@ -104,7 +104,9 @@ if (document.getElementById("search-form")) {
 
     function fetchAllData() {
         resultsDiv.textContent = "読み込み中...";
-        fetch("https://firstd1project.masaaki.workers.dev/")
+        const q = input.value.trim().toLowerCase();
+        const apiString = `https://firstd1project.masaaki.workers.dev/?category=${categoryFromParamOrReferrer}&keyword=${q}`
+        fetch("https://firstd1project.masaaki.workers.dev/?category={}")
             .then(res => res.json())
             .then(data => {
                 allData = data;
