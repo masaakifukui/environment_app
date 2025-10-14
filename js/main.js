@@ -106,7 +106,7 @@ if (document.getElementById("search-form")) {
         resultsDiv.textContent = "読み込み中...";
         const q = input.value.trim().toLowerCase();
         const apiString = `https://firstd1project.masaaki.workers.dev/?category=${categoryFromParamOrReferrer}&keyword=${q}`
-        fetch("https://firstd1project.masaaki.workers.dev/?category={}")
+        fetch(apiString)
             .then(res => res.json())
             .then(data => {
                 allData = data;
