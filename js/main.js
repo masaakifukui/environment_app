@@ -104,7 +104,6 @@ if (document.getElementById("search-form")) {
 
     function fetchAllData() {
         resultsDiv.textContent = "読み込み中...";
-        const q = input.value.trim().toLowerCase();
         const apiString = `https://firstd1project.masaaki.workers.dev`
         fetch(apiString)
             .then(res => res.json())
@@ -124,8 +123,6 @@ if (document.getElementById("search-form")) {
             const matchKeyword = q
                 ? (item.title.toLowerCase().includes(q) || (item.description || "").toLowerCase().includes(q))
                 : true;
-            const apiString = `https://firstd1project.masaaki.workers.dev/add-keyword?keyword=${q}`
-            fetch(apiString);
 
             const matchCategory = categoryFromParamOrReferrer !== null
                 ? Number(item.category) === categoryFromParamOrReferrer
@@ -151,6 +148,9 @@ if (document.getElementById("search-form")) {
         } else {
             params.delete("q");
         }
+        const apiString = `https://firstd1project.masaaki.workers.dev/add-keyword?keyword=${q}`
+        fetch(apiString);
+
         const newUrl = `${location.pathname}?${params.toString()}`.replace(/\?$/, "");
         window.history.replaceState({}, "", newUrl);
         applyFilterAndRender();
