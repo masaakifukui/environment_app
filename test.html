@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>API 表示サンプル</title>
+</head>
+<body>
+  <h1>一覧</h1>
+  <ul id="titleList"></ul>
+
+  <script>
+    // API からデータを取得
+    fetch("https://firstd1project.masaaki.workers.dev/?category=2") // ← 自分のAPIのURLに変更
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById("titleList");
+
+        data.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = `${item.title}`;
+          list.appendChild(li);
+        });
+      })
+      .catch(error => {
+        console.error("APIエラー:", error);
+      });
+  </script>
+</body>
+</html>

@@ -27,6 +27,7 @@ if (document.body.contains(document.getElementById("feed-a"))) {
                 let html = '';
                 const items = data.items.slice(0, 3);
                 items.forEach(item => {
+                    console.log(item)
                     html += `
                       <li class="rss-list">
                         <a href="${item.link}" target="_blank"><strong>${item.title}</strong></a><br>
@@ -103,7 +104,8 @@ if (document.getElementById("search-form")) {
 
     function fetchAllData() {
         resultsDiv.textContent = "読み込み中...";
-        fetch("https://firstd1project.masaaki.workers.dev/")
+        const apiString = `https://firstd1project.masaaki.workers.dev`
+        fetch(apiString)
             .then(res => res.json())
             .then(data => {
                 allData = data;
@@ -146,6 +148,9 @@ if (document.getElementById("search-form")) {
         } else {
             params.delete("q");
         }
+        const apiString = `https://firstd1project.masaaki.workers.dev/add-keyword?keyword=${qValue}`
+        fetch(apiString);
+
         const newUrl = `${location.pathname}?${params.toString()}`.replace(/\?$/, "");
         window.history.replaceState({}, "", newUrl);
         applyFilterAndRender();
