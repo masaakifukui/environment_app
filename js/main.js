@@ -148,7 +148,7 @@ if (document.getElementById("search-form")) {
         } else {
             params.delete("q");
         }
-        const apiString = `https://firstd1project.masaaki.workers.dev/add-keyword?keyword=${q}`
+        const apiString = `https://firstd1project.masaaki.workers.dev/add-keyword?keyword=${qValue}`
         fetch(apiString);
 
         const newUrl = `${location.pathname}?${params.toString()}`.replace(/\?$/, "");
