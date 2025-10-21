@@ -11,8 +11,12 @@ import { generateText } from "ai";
 
 export default async function handler(req, res) {
   try {
-    // 1. リクエストボディから 'prompt' を取得
-    const { prompt: userPrompt } = req.body;
+    // GETの場合の 'prompt' を取得
+    var userPrompt = req.query.prompt;
+    if (!userPrompt || typeof userPrompt !== 'string' || userPrompt.trim() === '') {
+      // POSTの場合
+      userPrompt = req.body.prompt;
+    }
 
     // プロンプトが存在しない場合のチェック
     if (!userPrompt || typeof userPrompt !== 'string' || userPrompt.trim() === '') {
