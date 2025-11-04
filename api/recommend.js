@@ -36,7 +36,10 @@ export default async function handler(req, res) {
     // });
     const { text } = await generateText({
       model,
-      prompt: combinedPrompt
+      prompt: combinedPrompt,
+      config: {
+        maxTokens: 4096,
+      },
     });
 
     res.status(200).json({ result: text });
