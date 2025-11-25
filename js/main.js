@@ -44,6 +44,37 @@ if (document.body.contains(document.getElementById("feed-a"))) {
     });
 }
 
+if (document.body.contains(document.getElementById("rss-recommend"))) {
+    const apiString = `https://firstd1project.masaaki.workers.dev/top-keywords`
+    fetchKeywords()
+    async function fetchKeywords() {
+        try {
+            // 1. fetch() は Promise を返し、await でレスポンスオブジェクトを取得
+            const response = await fetch(apiString);
+
+            // 2. HTTPステータスが成功（200番台）かチェック
+            if (!response.ok) {
+            // 成功でなければエラーを投げる
+            throw new Error(`HTTPエラー! ステータス: ${response.status}`);
+            }
+
+            // 3. レスポンスオブジェクトの .json() メソッドを呼び出し、
+            //    await でボディデータをJSONオブジェクトとして取得
+            const data = await response.json();
+
+            // 4. 取得したデータ（戻り値）を処理
+            console.log('✅ 取得したデータ:', data);
+            return data; // 必要であれば、このデータを関数の戻り値にする
+
+        } catch (error) {
+            // エラー（ネットワークエラーやHTTPエラーなど）をキャッチ
+            console.error('❌ データ取得中にエラーが発生しました:', error);
+            // エラー時の処理（例: 空のデータを返すなど）
+            return null;
+        }
+    }
+}
+
 // ------------------------------
 // search.html 用 検索処理
 // ------------------------------
