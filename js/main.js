@@ -65,7 +65,7 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             // 4. 取得したデータ（戻り値）を処理
             console.log('✅ 取得したデータ:', data);
 
-            fetchRecommend()
+            fetchRecommend(data)
 
             return data; // 必要であれば、このデータを関数の戻り値にする
 
@@ -77,10 +77,11 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
         }
     }
 
-    async function fetchRecommend() {
+    async function fetchRecommend(newsData) {
         const requestUrl = 'https://environment-app-delta.vercel.app/api/recommend?prompt=' + urlEncodeString(
         '次のニュース記事データを読み取り、各記事を要約してください。各要約は最大120文字以内とし、JSON形式で出力してください。出力フォーマット（必ずこの形式で出力）：[{"title": "記事タイトル","summary": "要約文","url": "記事URL"},...]'
-        + '--- ニュースデータ ---タイトル: 「世界ウミガメの日」｜研究・教育 - 名古屋港水族館内容: また、卵の時の温度で性別が分かれる温度依存型性決定のため、地球<b>温暖化</b>の影響でメスばかりになってしまう可能性があると言われています。 身近なことで&nbsp;...記事URL: https://nagoyaaqua.jp/study/column/26552/タイトル: 岩手県がグリーン／ブルーボンド発行 大船渡山林火災の支援も - NHKニュース内容: 【NHK】岩手県は、地球<b>温暖化</b>対策や海洋資源の保護などに取り組む資金を調達する債権、「グリーン／ブルーボンド」を３回目となる今年度も発行することを決…記事URL: https://www3.nhk.or.jp/lnews/morioka/20250616/6040025919.html')
+        + '--- ニュースデータ ---')
+        + urlEncodeString(newsData)
         try {
             const response = await fetch(requestUrl, {
             method: 'GET', // GETリクエストを指定
