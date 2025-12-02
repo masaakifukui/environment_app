@@ -47,6 +47,7 @@ if (document.body.contains(document.getElementById("feed-a"))) {
 if (document.body.contains(document.getElementById("rss-recommend"))) {
     const apiString = `https://firstd1project.masaaki.workers.dev/top-keywords`
     const recommendData = fetchKeywordData()
+    jsonPasrse(recommendData)
     async function fetchKeywordData() {
         try {
             // 1. fetch() は Promise を返し、await でレスポンスオブジェクトを取得
