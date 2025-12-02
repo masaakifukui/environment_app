@@ -94,8 +94,8 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
 
             const jsonString = await response.json();
             const data = JSON.parse(jsonString);
-            console.log('✅ 取得したデータ:', data);
-            return data;
+            console.log('✅ 取得したデータ:', jsonString);
+            return jsonString;
             
         } catch (error) {
             console.error("GET API呼び出し中にエラーが発生しました:", error);
