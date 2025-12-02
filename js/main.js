@@ -97,10 +97,23 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             const data = await response.json();
             var jsonString = data.result
             console.log('✅ 取得したデータ2:', jsonString);
-            return jsonString;
-            // 文字列をJSONオブジェクトに変換
-            const jsonObject = JSON.parse(jsonString);
-            
+            try {
+                const parsedData = JSON.parse(jsonString);
+
+                // パース結果の型を確認（配列になっている）
+                console.log(`パース後の型: ${Array.isArray(parsedData) ? 'Array' : typeof parsedData}`); 
+                console.log(`要素数: ${parsedData.length}`); // 3
+                
+                // 最初の記事のタイトルを出力
+                console.log(`\n--- 最初の記事 ---`);
+                console.log(`タイトル: ${parsedData[0].title}`);
+                console.log(`要約: ${parsedData[0].summary}`);
+                console.log(`URL: ${parsedData[0].url}`);
+
+            } catch (e) {
+                // JSON文字列が不正な形式だった場合のエラー処理
+                console.error("JSONパースエラーが発生しました:", e.message);
+            }
         } catch (error) {
             console.error("GET API呼び出し中にエラーが発生しました:", error);
             return null;
@@ -115,26 +128,6 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
     function urlEncodeString(rawString) {
         // encodeURIComponent() を使用
         return encodeURIComponent(rawString);
-    }
-
-    function jsonPasrse(json_data) {
-        try {
-            const parsedData = JSON.parse(json_data);
-
-            // パース結果の型を確認（配列になっている）
-            console.log(`パース後の型: ${Array.isArray(parsedData) ? 'Array' : typeof parsedData}`); 
-            console.log(`要素数: ${parsedData.length}`); // 3
-            
-            // 最初の記事のタイトルを出力
-            console.log(`\n--- 最初の記事 ---`);
-            console.log(`タイトル: ${parsedData[0].title}`);
-            console.log(`要約: ${parsedData[0].summary}`);
-            console.log(`URL: ${parsedData[0].url}`);
-
-        } catch (e) {
-            // JSON文字列が不正な形式だった場合のエラー処理
-            console.error("JSONパースエラーが発生しました:", e.message);
-        }
     }
 }
 
