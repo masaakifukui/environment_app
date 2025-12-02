@@ -2,6 +2,15 @@ body {
     margin: 0;
     font-size: 16px;
 }
+.recommend-area {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.recommend-area h2 {
+    text-align: center;
+}
+
 .content-area {
     width: 80%;
     margin: 0 auto;

@@ -112,7 +112,7 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
                 if (recommendData) {
                     displayArticles(recommendData);
                 }
-                return parsedData;
+                return recommendData;
 
             } catch (e) {
                 // JSON文字列が不正な形式だった場合のエラー処理
@@ -141,25 +141,32 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
         // 2. 記事データをループ処理して要素を生成
         articles.forEach(article => {
             const li = document.createElement('li');
+            li.className = "rss-list";
+
+            li.innerHTML = `
+              <a href="${article.url}" target="_blank"><strong>${article.title}</strong></a><br>
+              <p>${article.summary}</p>
+            `;
+            ul.appendChild(li);
             
             // 記事タイトルと要約
-            const title = document.createElement('h3');
-            title.textContent = article.title;
+            // const title = document.createElement('h3');
+            // title.textContent = article.title;
             
-            const summary = document.createElement('p');
-            summary.textContent = article.summary;
+            // const summary = document.createElement('p');
+            // summary.textContent = article.summary;
 
-            // 記事へのリンク
-            const link = document.createElement('a');
-            link.href = article.url;
-            link.textContent = '続きを読む';
-            link.target = '_blank'; // 新しいタブで開く
+            // // 記事へのリンク
+            // const link = document.createElement('a');
+            // link.href = article.url;
+            // link.textContent = '続きを読む';
+            // link.target = '_blank'; // 新しいタブで開く
 
-            li.appendChild(title);
-            li.appendChild(summary);
-            li.appendChild(link);
+            // li.appendChild(title);
+            // li.appendChild(summary);
+            // li.appendChild(link);
             
-            ul.appendChild(li);
+            // ul.appendChild(li);
         });
 
         // 3. コンテナにリストを追加
