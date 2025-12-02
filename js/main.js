@@ -94,8 +94,12 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
 
             const data = await response.json();
             console.log('✅ 取得したデータ:', data);
-            const jsonString = JSON.parse(data);
-            console.log('✅ 取得したデータ:', jsonString);
+            data.forEach(item => {
+                console.log("タイトル:", item.title);
+                console.log("概要:", item.summary);
+                console.log("URL:", item.url);
+                console.log("-----");
+            });
             return jsonString;
             
         } catch (error) {
