@@ -46,8 +46,8 @@ if (document.body.contains(document.getElementById("feed-a"))) {
 
 if (document.body.contains(document.getElementById("rss-recommend"))) {
     const apiString = `https://firstd1project.masaaki.workers.dev/top-keywords`
-    fetchKeywords()
-    async function fetchKeywords() {
+    fetchKeywordData()
+    async function fetchKeywordData() {
         try {
             // 1. fetch() は Promise を返し、await でレスポンスオブジェクトを取得
             const response = await fetch(apiString);
@@ -63,11 +63,11 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             const data = await response.json();
 
             // 4. 取得したデータ（戻り値）を処理
-            console.log('✅ 取得したデータ:', data);
+            //console.log('✅ 取得したデータ:', data);
 
-            fetchRecommend(data)
+            const newData = fetchRecommend(data)
 
-            return data; // 必要であれば、このデータを関数の戻り値にする
+            return newData; // 必要であれば、このデータを関数の戻り値にする
 
         } catch (error) {
             // エラー（ネットワークエラーやHTTPエラーなど）をキャッチ
@@ -84,15 +84,16 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
         + urlEncodeString(newsData)
         try {
             const response = await fetch(requestUrl, {
-            method: 'GET', // GETリクエストを指定
-            // GETリクエストでは通常、bodyやContent-Typeヘッダーは不要
+                method: 'GET', // GETリクエストを指定
+                // GETリクエストでは通常、bodyやContent-Typeヘッダーは不要
             });
 
             if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
+            const jsonString = await response.json();
+            const data = JSON.parse(jsonString);
             console.log('✅ 取得したデータ:', data);
             return data;
             
@@ -108,8 +109,8 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
      * @returns {string} URLエンコードされた文字列
      */
     function urlEncodeString(rawString) {
-    // encodeURIComponent() を使用
-    return encodeURIComponent(rawString);
+        // encodeURIComponent() を使用
+        return encodeURIComponent(rawString);
     }
 }
 
