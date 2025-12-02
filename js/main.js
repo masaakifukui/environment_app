@@ -96,8 +96,8 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             var jsonString = data.result
             console.log('✅ 取得したデータ2:', jsonString);
             try {
-                const replaceText = jsonString.replace("```", "");
-                const replaceJsonText = replaceText.replace("json", "");
+                const replaceHeadText = jsonString.replace("```json", "");
+                const replaceJsonText = replaceHeadText.replace("```", "");
                 const parsedData = JSON.parse(replaceJsonText);
 
                 // パース結果の型を確認（配列になっている）
