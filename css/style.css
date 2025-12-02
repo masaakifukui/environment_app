@@ -12,6 +12,14 @@ body {
     text-align: center;
 }
 
+.read-data {
+    text-align: center;
+}
+
+.recommend-area ul {
+    padding: 0 20px;
+}
+
 .content-area {
     width: 80%;
     margin: 0 auto;
@@ -19,6 +27,10 @@ body {
 
 .content-area h2 {
     text-align: center;
+}
+
+.content-area ul {
+    padding: 0 20px;
 }
 
 .rss-btn {
