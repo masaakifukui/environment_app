@@ -35,8 +35,20 @@ export default async function handler(req, res) {
         maxTokens: 4096,
       },
     });
+    let cleanText = text.trim();
 
-    res.status(200).json({ result: text });
+    // 先頭の '```json' や '```'、末尾の '```' を取り除く
+    if (cleanText.startsWith('```json')) {
+      cleanText = cleanText.substring('```json'.length);
+    } else if (cleanText.startsWith('```')) {
+      cleanText = cleanText.substring('```'.length);
+    }
+
+    if (cleanText.endsWith('```')) {
+      cleanText = cleanText.substring(0, cleanText.length - '```'.length);
+    }
+
+    res.status(200).json({ result: cleanText });
   } catch (err) {
     // error
     console.error(err);

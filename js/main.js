@@ -95,9 +95,9 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             const data = await response.json();
             var jsonString = data.result
             try {
-                const replaceHeadText = jsonString.replace("```json", "");
-                const replaceJsonText = replaceHeadText.replace("```", "");
-                const recommendData = JSON.parse(replaceJsonText);
+                // const replaceHeadText = jsonString.replace("```json", "");
+                // const replaceJsonText = replaceHeadText.replace("```", "");
+                const recommendData = JSON.parse(jsonString);
 
                 // パース結果の型を確認（配列になっている）
                 // console.log(`パース後の型: ${Array.isArray(parsedData) ? 'Array' : typeof parsedData}`); 
