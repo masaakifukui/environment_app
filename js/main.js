@@ -65,14 +65,9 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             // 4. 取得したデータ（戻り値）を処理
             //console.log('✅ 取得したデータ:', data);
 
-            const recommendData = fetchRecommend(data)
+            fetchRecommend(data)
 
-            // 🌟 追加: 取得したデータを画面に表示
-            if (recommendData) {
-                displayArticles(recommendData);
-            }
-
-            return recommendData; // 必要であれば、このデータを関数の戻り値にする
+            return data; // 必要であれば、このデータを関数の戻り値にする
 
         } catch (error) {
             // エラー（ネットワークエラーやHTTPエラーなど）をキャッチ
@@ -102,17 +97,21 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             try {
                 const replaceHeadText = jsonString.replace("```json", "");
                 const replaceJsonText = replaceHeadText.replace("```", "");
-                const parsedData = JSON.parse(replaceJsonText);
+                const recommendData = JSON.parse(replaceJsonText);
 
                 // パース結果の型を確認（配列になっている）
                 // console.log(`パース後の型: ${Array.isArray(parsedData) ? 'Array' : typeof parsedData}`); 
                 // console.log(`要素数: ${parsedData.length}`); // 3
                 
                 // 最初の記事のタイトルを出力
-                console.log(`\n--- 最初の記事 ---`);
-                console.log(`タイトル: ${parsedData[0].title}`);
-                console.log(`要約: ${parsedData[0].summary}`);
-                console.log(`URL: ${parsedData[0].url}`);
+                // console.log(`\n--- 最初の記事 ---`);
+                // console.log(`タイトル: ${parsedData[0].title}`);
+                // console.log(`要約: ${parsedData[0].summary}`);
+                // console.log(`URL: ${parsedData[0].url}`);
+                // 🌟 追加: 取得したデータを画面に表示
+                if (recommendData) {
+                    displayArticles(recommendData);
+                }
                 return parsedData;
 
             } catch (e) {
