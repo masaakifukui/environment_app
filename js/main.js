@@ -96,7 +96,7 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             var jsonString = data.result
             console.log('✅ 取得したデータ2:', jsonString);
             try {
-                const replaceText = text.replace("```", "");
+                const replaceText = jsonString.replace("```", "");
                 const replaceJsonText = replaceText.replace("json", "");
                 const parsedData = JSON.parse(replaceJsonText);
 
