@@ -66,8 +66,6 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             //console.log('✅ 取得したデータ:', data);
 
             const recommendData = fetchRecommend(data)
-            jsonPasrse(recommendData)
-    
 
             return recommendData; // 必要であれば、このデータを関数の戻り値にする
 
@@ -109,6 +107,7 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
                 console.log(`タイトル: ${parsedData[0].title}`);
                 console.log(`要約: ${parsedData[0].summary}`);
                 console.log(`URL: ${parsedData[0].url}`);
+                return parsedData;
 
             } catch (e) {
                 // JSON文字列が不正な形式だった場合のエラー処理
