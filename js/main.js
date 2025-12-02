@@ -92,8 +92,9 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const jsonString = await response.json();
-            const data = JSON.parse(jsonString);
+            const data = await response.json();
+            console.log('✅ 取得したデータ:', data);
+            const jsonString = JSON.parse(data);
             console.log('✅ 取得したデータ:', jsonString);
             return jsonString;
             

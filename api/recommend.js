@@ -36,7 +36,7 @@ export default async function handler(req, res) {
       },
     });
 
-    res.status(200).json({ text });
+    res.status(200).json({ result: text });
   } catch (err) {
     // error
     console.error(err);
