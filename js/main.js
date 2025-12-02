@@ -46,7 +46,7 @@ if (document.body.contains(document.getElementById("feed-a"))) {
 
 if (document.body.contains(document.getElementById("rss-recommend"))) {
     const apiString = `https://firstd1project.masaaki.workers.dev/top-keywords`
-    fetchKeywordData()
+    const recommendData = fetchKeywordData()
     async function fetchKeywordData() {
         try {
             // 1. fetch() は Promise を返し、await でレスポンスオブジェクトを取得
@@ -93,9 +93,12 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             }
 
             const data = await response.json();
-            console.log('✅ 取得したデータ:', data);
             var jsonString = data.result
             console.log('✅ 取得したデータ2:', jsonString);
+            return jsonString;
+            // 文字列をJSONオブジェクトに変換
+            const jsonObject = JSON.parse(jsonString);
+            
         } catch (error) {
             console.error("GET API呼び出し中にエラーが発生しました:", error);
             return null;
@@ -110,6 +113,26 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
     function urlEncodeString(rawString) {
         // encodeURIComponent() を使用
         return encodeURIComponent(rawString);
+    }
+
+    function jsonPasrse(json_data) {
+        try {
+            const parsedData = JSON.parse(json_data);
+
+            // パース結果の型を確認（配列になっている）
+            console.log(`パース後の型: ${Array.isArray(parsedData) ? 'Array' : typeof parsedData}`); 
+            console.log(`要素数: ${parsedData.length}`); // 3
+            
+            // 最初の記事のタイトルを出力
+            console.log(`\n--- 最初の記事 ---`);
+            console.log(`タイトル: ${parsedData[0].title}`);
+            console.log(`要約: ${parsedData[0].summary}`);
+            console.log(`URL: ${parsedData[0].url}`);
+
+        } catch (e) {
+            // JSON文字列が不正な形式だった場合のエラー処理
+            console.error("JSONパースエラーが発生しました:", e.message);
+        }
     }
 }
 
