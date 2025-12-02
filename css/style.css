@@ -5,6 +5,7 @@ body {
 .recommend-area {
     width: 80%;
     margin: 0 auto;
+    border: 3px solid #d3d3d3;
 }
 
 .recommend-area h2 {
