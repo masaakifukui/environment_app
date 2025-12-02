@@ -67,6 +67,11 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
 
             const recommendData = fetchRecommend(data)
 
+            // 🌟 追加: 取得したデータを画面に表示
+            if (recommendData) {
+                displayArticles(recommendData);
+            }
+
             return recommendData; // 必要であれば、このデータを関数の戻り値にする
 
         } catch (error) {
@@ -94,15 +99,14 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
 
             const data = await response.json();
             var jsonString = data.result
-            console.log('✅ 取得したデータ2:', jsonString);
             try {
                 const replaceHeadText = jsonString.replace("```json", "");
                 const replaceJsonText = replaceHeadText.replace("```", "");
                 const parsedData = JSON.parse(replaceJsonText);
 
                 // パース結果の型を確認（配列になっている）
-                console.log(`パース後の型: ${Array.isArray(parsedData) ? 'Array' : typeof parsedData}`); 
-                console.log(`要素数: ${parsedData.length}`); // 3
+                // console.log(`パース後の型: ${Array.isArray(parsedData) ? 'Array' : typeof parsedData}`); 
+                // console.log(`要素数: ${parsedData.length}`); // 3
                 
                 // 最初の記事のタイトルを出力
                 console.log(`\n--- 最初の記事 ---`);
@@ -119,6 +123,48 @@ if (document.body.contains(document.getElementById("rss-recommend"))) {
             console.error("GET API呼び出し中にエラーが発生しました:", error);
             return null;
         }
+    }
+
+    /**
+     * 取得した記事データを画面（DOM）に表示する関数
+     * @param {Array<Object>} articles - 表示する記事データの配列
+     */
+    function displayArticles(articles) {
+        // 1. コンテナ要素を取得
+        const container = document.getElementById('articles-container');
+        
+        // 念のため、既存の「読み込み中」メッセージなどをクリア
+        container.innerHTML = ''; 
+
+        // 記事リストの要素を作成
+        const ul = document.createElement('ul');
+
+        // 2. 記事データをループ処理して要素を生成
+        articles.forEach(article => {
+            const li = document.createElement('li');
+            
+            // 記事タイトルと要約
+            const title = document.createElement('h3');
+            title.textContent = article.title;
+            
+            const summary = document.createElement('p');
+            summary.textContent = article.summary;
+
+            // 記事へのリンク
+            const link = document.createElement('a');
+            link.href = article.url;
+            link.textContent = '続きを読む';
+            link.target = '_blank'; // 新しいタブで開く
+
+            li.appendChild(title);
+            li.appendChild(summary);
+            li.appendChild(link);
+            
+            ul.appendChild(li);
+        });
+
+        // 3. コンテナにリストを追加
+        container.appendChild(ul);
     }
 
     /**
